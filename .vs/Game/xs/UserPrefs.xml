@@ -1,0 +1,31 @@
+﻿<Properties StartupConfiguration="{DDFBC18F-9396-3137-9CFE-DEB2CDB74636}|">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/_Project/Scripts/PlatformMover.cs">
+    <Files>
+      <File FileName="Assets/_Project/Scripts/PlatformMover.cs" Line="27" Column="2" />
+      <File FileName="Assets/_Project/Scripts/PlatformCollisionHandler.cs" Line="1" Column="1" />
+      <File FileName="Assets/_Project/Scripts/GroundCheker.cs" Line="1" Column="1" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="Game" expanded="True">
+            <Node name="Assets" expanded="True">
+              <Node name="_Project" expanded="True">
+                <Node name="Scripts" expanded="True">
+                  <Node name="PlatformMover.cs" selected="True" />
+                </Node>
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="690163a2-a619-4113-91c5-6eccf418bc61" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MultiItemStartupConfigurations />
+</Properties>
