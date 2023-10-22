@@ -42,13 +42,23 @@ public class PlayerGrab : MonoBehaviour
 
     private void HandleGrabRelease()
     {
+
         if (Input.GetKeyDown(KeyCode.LeftShift) && currentGrabbableObject)
         {
+            BarrelState barrelState = currentGrabbableObject.GetComponent<BarrelState>();
+            if (barrelState && barrelState.isLocked)
+            {
+                // If the barrel is locked, we simply return and don't proceed with the grab/release logic.
+                return;
+            }
             if (isHoldingObject)
             {
                 // Release the object
                 currentGrabbableObject.transform.SetParent(null);
                 isHoldingObject = false;
+
+                // Reset the tag to "Barrel" (if it was changed elsewhere)
+                currentGrabbableObject.tag = "Grabbable";
             }
             else
             {
@@ -57,5 +67,15 @@ public class PlayerGrab : MonoBehaviour
                 isHoldingObject = true;
             }
         }
+    }
+
+    public void ReleaseObject()
+    {
+        if (isHoldingObject && currentGrabbableObject)
+        {
+            currentGrabbableObject.transform.SetParent(null);
+            isHoldingObject = false;
+        }
+        currentGrabbableObject = null;
     }
 }

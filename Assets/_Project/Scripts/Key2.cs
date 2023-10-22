@@ -1,49 +1,133 @@
 using UnityEngine;
 
-public class Key2 : MonoBehaviour
+public class Key2Collectible : MonoBehaviour
 {
-    public GameObject[] Fires;
-    public GameObject[] boxes;         // Drag the 3 boxes from your scene here.
+    public GameObject[] barrels;       // Drag the 4 barrels here.
+    public GameObject[] fires;         // Drag the 4 fire positions here.
+    public GameObject secretDoor;      // Drag your secret door here.
+    private int barrelsPlaced = 0;     // To keep track of barrels placed correctly.
 
     private void Start()
     {
-        foreach (GameObject fire in Fires)
+        foreach (GameObject barrel in barrels)
         {
-            fire.SetActive(false);
+            barrel.SetActive(false);
         }
 
-        foreach (GameObject box in boxes)
+        foreach (GameObject fire in fires)
         {
-            box.SetActive(false);
+            fire.SetActive(false);
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player")) // Assuming your player object has a tag named "Player".
+        if (other.CompareTag("Player"))
         {
             if (this.CompareTag("Key2"))
             {
-                CollectKey1();
+                CollectKey2();
             }
 
-            // Hide the key after collection.
             this.gameObject.SetActive(false);
         }
     }
 
-    void CollectKey1()
+    void CollectKey2()
     {
-        // Activate the 3 boxes.
-        foreach (GameObject box in boxes)
+        foreach (GameObject barrel in barrels)
         {
-            box.SetActive(true);
+            barrel.SetActive(true);
         }
 
-        foreach (GameObject fire in Fires)
+        foreach (GameObject fire in fires)
         {
             fire.SetActive(true);
+            // Attach the BarrelPlacement script to each fire (discussed below).
+            fire.AddComponent<BarrelPlacement>().Initialize(this);
+        }
+    }
+
+    // This method is called from the BarrelPlacement script.
+    public void BarrelCorrectlyPlaced()
+    {
+        barrelsPlaced++;
+        if (barrelsPlaced == 4) // All barrels are placed correctly.
+        {
+            // Logic to open the secret door.
+            OpenSecretDoor();
+        }
+    }
+
+    void OpenSecretDoor()
+    {
+        // Assuming the door just gets deactivated to "open" it.
+        // You can replace this with any animation or other logic you have for the door.
+        secretDoor.SetActive(false);
+    }
+}
+
+public class BarrelPlacement : MonoBehaviour
+{
+    private Key2Collectible key2Script;
+    private Collider myCollider; // Collider of the fire
+
+    private void Awake()
+    {
+        myCollider = GetComponent<Collider>();
+    }
+
+    public void Initialize(Key2Collectible script)
+    {
+        key2Script = script;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        Debug.Log("Something entered the trigger: " + other.gameObject.name);
+        if (other.CompareTag("Grabbable"))
+        {
+            Debug.Log("A barrel entered the trigger.");
+
+            // Lock the barrel in place.
+            LockBarrel(other.gameObject);
+
+            // Extinguish fire.
+            this.gameObject.SetActive(false);
+            key2Script.BarrelCorrectlyPlaced();
+        }
+    }
+
+    private void LockBarrel(GameObject barrel)
+    {
+        // Set barrel position to the fire's position.
+        barrel.transform.position = this.transform.position;
+
+        // Unparent the barrel, if it's a child of another object (like the player).
+        barrel.transform.SetParent(null);
+
+        // Mark the barrel as locked.
+        BarrelState barrelState = barrel.GetComponent<BarrelState>();
+        if (barrelState)
+        {
+            barrelState.isLocked = true;
+        }
+
+        // Optionally, you can also disable the collider on the barrel so it no longer interacts.
+        Collider barrelCollider = barrel.GetComponent<Collider>();
+        if (barrelCollider)
+        {
+            barrelCollider.enabled = false;
+        }
+
+        PlayerGrab playerGrab = FindObjectOfType<PlayerGrab>();
+        if (playerGrab)
+        {
+            playerGrab.ReleaseObject();
         }
     }
 }
+
+
+
 

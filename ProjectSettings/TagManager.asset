@@ -11,6 +11,7 @@ TagManager:
   - Key1
   - Key2
   - Key3
+  - Barrel
   layers:
   - Default
   - TransparentFX
