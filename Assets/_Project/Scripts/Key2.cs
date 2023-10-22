@@ -29,6 +29,8 @@ public class Key2Collectible : MonoBehaviour
                 CollectKey2();
             }
 
+            GameManager.instance.KeyCollected(); // Notify the GameManager that a key has been collected.
+
             this.gameObject.SetActive(false);
         }
     }
@@ -84,10 +86,9 @@ public class BarrelPlacement : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Something entered the trigger: " + other.gameObject.name);
+     
         if (other.CompareTag("Grabbable"))
         {
-            Debug.Log("A barrel entered the trigger.");
 
             // Lock the barrel in place.
             LockBarrel(other.gameObject);

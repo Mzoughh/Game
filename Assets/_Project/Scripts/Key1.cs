@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Key1 : MonoBehaviour
 {
@@ -24,6 +25,8 @@ public class Key1 : MonoBehaviour
             {
                 CollectKey1();
             }
+
+            GameManager.instance.KeyCollected(); // Notify the GameManager that a key has been collected.
 
             // Hide the key after collection.
             this.gameObject.SetActive(false);
