@@ -2,13 +2,15 @@ using UnityEngine;
 
 public class Key2 : MonoBehaviour
 {
-    public GameObject key2;            // Drag the key2 object from your scene here.
+    public GameObject[] Fires;
     public GameObject[] boxes;         // Drag the 3 boxes from your scene here.
 
     private void Start()
     {
-        // Ensure key2 and the boxes start as inactive.
-        key2.SetActive(false);
+        foreach (GameObject fire in Fires)
+        {
+            fire.SetActive(false);
+        }
 
         foreach (GameObject box in boxes)
         {
@@ -32,13 +34,15 @@ public class Key2 : MonoBehaviour
 
     void CollectKey1()
     {
-        // Activate key2.
-        key2.SetActive(true);
-
         // Activate the 3 boxes.
         foreach (GameObject box in boxes)
         {
             box.SetActive(true);
+        }
+
+        foreach (GameObject fire in Fires)
+        {
+            fire.SetActive(true);
         }
     }
 }
